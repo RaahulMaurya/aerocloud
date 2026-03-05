@@ -31,8 +31,8 @@ export function ShareLinkModal({
         const fullLink = `${window.location.origin}/download-folder/${user.uid}/${file.name}`
         setShareLink(fullLink)
       } else {
-        const link = await createSharedLink(user.uid, file.id, file.name, file.url, file.size)
-        const fullLink = `${window.location.origin}/shared/${link.id}`
+        const link = await createSharedLink(user.uid, file.id, file.name, file.url, file.size, undefined, file.fullPath)
+        const fullLink = `${window.location.origin}/shared?id=${link.id}`
         setShareLink(fullLink)
       }
     } catch (error) {

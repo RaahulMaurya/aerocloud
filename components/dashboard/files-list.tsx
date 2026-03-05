@@ -18,6 +18,8 @@ import {
   Video,
   Music,
   FileText,
+  CheckSquare,
+  Square,
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useAuth } from "@/contexts/auth-context"
@@ -699,7 +701,7 @@ export function FilesList() {
               {selectedFiles.length > 0 && (
                 <button
                   onClick={handleBulkDelete}
-                  className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-lg transition"
+                  className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-white rounded-lg transition font-medium"
                 >
                   <Trash2 size={18} />
                   <span>Delete {selectedFiles.length} file(s)</span>
@@ -708,7 +710,7 @@ export function FilesList() {
               {selectedFolders.length > 0 && (
                 <button
                   onClick={handleBulkDeleteFolders}
-                  className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-lg transition"
+                  className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-white rounded-lg transition font-medium"
                 >
                   <Trash2 size={18} />
                   <span>Delete {selectedFolders.length} folder(s)</span>
@@ -770,10 +772,26 @@ export function FilesList() {
           <h3 className="text-xl font-bold text-foreground mb-4">Folders</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {folders.map((folder) => (
-              <div
-                key={folder.id || folder.name}
-                className="group relative bg-card border border-border rounded-xl p-4 hover:shadow-lg hover:border-primary/30 transition-all"
-              >
+              <div className="group relative bg-card border border-border rounded-xl p-4 hover:shadow-lg hover:border-primary/30 transition-all">
+                {/* Folder checkbox */}
+                <div className={`absolute top-3 left-3 z-10 transition-opacity ${selectedFolders.length > 0 ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setSelectedFolders((prev) =>
+                        prev.includes(folder.name) ? prev.filter((n) => n !== folder.name) : [...prev, folder.name]
+                      )
+                    }}
+                    className="p-1 hover:scale-110 transition-transform"
+                    title="Select folder"
+                  >
+                    {selectedFolders.includes(folder.name) ? (
+                      <CheckSquare size={18} className="text-primary" />
+                    ) : (
+                      <Square size={18} className="text-foreground/40" />
+                    )}
+                  </button>
+                </div>
                 <button
                   onClick={(e) => {
                     e.stopPropagation()
@@ -900,8 +918,27 @@ export function FilesList() {
                 {filteredFiles.map((file) => (
                   <div
                     key={file.id}
-                    className="group relative bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all"
+                    className={`group relative bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all ${selectedFiles.includes(file.id) ? "ring-2 ring-primary" : ""}`}
                   >
+                    {/* File checkbox */}
+                    <div className={`absolute top-3 left-3 z-10 transition-opacity ${selectedFiles.length > 0 ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSelectedFiles((prev) =>
+                            prev.includes(file.id) ? prev.filter((id) => id !== file.id) : [...prev, file.id]
+                          )
+                        }}
+                        className="p-1 hover:scale-110 transition-transform"
+                        title="Select file"
+                      >
+                        {selectedFiles.includes(file.id) ? (
+                          <CheckSquare size={18} className="text-primary" />
+                        ) : (
+                          <Square size={18} className="text-foreground/40" />
+                        )}
+                      </button>
+                    </div>
                     {/* Star icon */}
                     <button
                       onClick={(e) => {

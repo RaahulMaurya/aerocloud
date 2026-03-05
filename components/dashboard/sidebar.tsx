@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { LayoutGrid, FileText, LinkIcon, Activity, Settings, UploadIcon, Lock, Star, Crown, ChevronLeft, ChevronRight } from "lucide-react"
+import { LayoutGrid, FileText, LinkIcon, Activity, Settings, UploadIcon, Star, Crown, ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SidebarProps {
@@ -19,7 +19,7 @@ export function Sidebar({ activeTab, onNavigate }: SidebarProps) {
         { id: "upload", label: "Upload Files", icon: UploadIcon },
         { id: "files", label: "My Files", icon: FileText },
         { id: "starred", label: "Starred Files", icon: Star },
-        { id: "vault", label: "Secret Vault", icon: Lock },
+
         { id: "shared-links", label: "Shared Links", icon: LinkIcon },
         { id: "plans", label: "Plans & Pricing", icon: Crown },
         { id: "activity", label: "Activity Log", icon: Activity },

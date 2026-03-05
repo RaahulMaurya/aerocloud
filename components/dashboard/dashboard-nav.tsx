@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { Cloud, Settings, Menu, X, LogOut, Upload, FolderPlus, Star, Activity, Link2, Moon, Sun, HelpCircle, MessageCircle, Lock } from "lucide-react"
+import { Cloud, Settings, Menu, X, LogOut, Upload, FolderPlus, Star, Activity, Link2, Moon, Sun, HelpCircle, MessageCircle } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
@@ -31,7 +31,7 @@ export function DashboardNav({ user, onNavigate, onSearch, onChatOpen }: Dashboa
   // Check plan features
   const plan = userData?.plan || userData?.subscriptionPlan || "free"
   const hasChatbot = plan === "pro" || plan === "enterprise"
-  const hasVault = (userData as any)?.vault || plan !== "free"
+
 
   useEffect(() => {
     setMounted(true)
@@ -102,18 +102,7 @@ export function DashboardNav({ user, onNavigate, onSearch, onChatOpen }: Dashboa
 
 
 
-            {/* Vault Icon */}
-            <button
-              onClick={() => hasVault && onNavigate?.("vault")}
-              className={`p-2.5 rounded-lg transition hover:scale-110 border border-transparent ${hasVault
-                ? "hover:bg-muted hover:border-border/50 cursor-pointer"
-                : "cursor-not-allowed opacity-50"
-                }`}
-              title={hasVault ? "Secret Vault" : "Secret Vault (Locked - Upgrade to Starter plan)"}
-              disabled={!hasVault}
-            >
-              <Lock size={20} className={hasVault ? "text-foreground/70 hover:text-primary transition" : "text-foreground/40"} />
-            </button>
+
 
             <button
               onClick={() => router.push("/support")}

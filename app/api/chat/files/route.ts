@@ -15,7 +15,9 @@ export async function POST(req: Request) {
     // Check for API key
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY
     if (!apiKey) {
-      console.error('Missing GOOGLE_GENERATIVE_AI_API_KEY environment variable')
+      console.error('[Chat API] CRITICAL: Missing GOOGLE_GENERATIVE_AI_API_KEY environment variable.')
+      console.error('[Chat API] Please add GOOGLE_GENERATIVE_AI_API_KEY to your Vercel Environment Variables.')
+      console.error('[Chat API] Get a key at: https://aistudio.google.com/app/apikey')
       return new Response(JSON.stringify({ error: 'AI service not configured. Please contact support.' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }

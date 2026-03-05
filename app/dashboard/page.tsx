@@ -12,13 +12,13 @@ import { SettingsPanel } from "@/components/dashboard/settings-panel"
 import { FileUpload } from "@/components/dashboard/file-upload"
 import { SharedLinksPanel } from "@/components/dashboard/shared-links-panel"
 
-import { SecretVault } from "@/components/dashboard/secret-vault"
+
 import { AIChatbotDialog } from "@/components/dashboard/ai-chatbot-dialog"
 import { PlansDisplay } from "@/components/dashboard/plans-display"
 import { StorageFullModal } from "@/components/storage-full-modal"
 
 import { useAuth } from "@/contexts/auth-context"
-import { LayoutGrid, FileText, LinkIcon, Activity, Settings, UploadIcon, Lock, Star, Crown } from "lucide-react"
+import { LayoutGrid, FileText, LinkIcon, Activity, Settings, UploadIcon, Star, Crown } from "lucide-react"
 import { doc, setDoc } from "firebase/firestore"
 import { db } from "@/firebase/config"
 
@@ -103,7 +103,9 @@ export default function Dashboard() {
                   <StorageOverview user={userData} />
                   <div>
                     <h2 className="text-xl font-bold text-foreground mb-4">Recent Activity</h2>
-                    <ActivityLog />
+                    <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent pr-1">
+                      <ActivityLog />
+                    </div>
                   </div>
                 </div>
 
@@ -124,7 +126,7 @@ export default function Dashboard() {
               {activeTab === "starred" && <StarredFiles />}
 
 
-              {activeTab === "vault" && <SecretVault key={refreshTrigger} />}
+
 
               {activeTab === "shared-links" && (
                 <div className="space-y-6">

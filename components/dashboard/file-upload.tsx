@@ -194,12 +194,17 @@ export function FileUpload({ onUploadComplete, folder = "" }: { onUploadComplete
             const eta = calculateETASeconds(progress, elapsedMs)
             const etaString = formatETA(eta)
 
+            // Check pausedFilesRef directly (sync) — don't overwrite 'paused' back to 'uploading'
+            const isCurrentlyPaused = pausedFilesRef.current.has(currentUploadingFile.id)
+
             setUploadingFiles((prevFiles) =>
-              prevFiles.map((f) =>
-                f.id === currentUploadingFile.id
-                  ? { ...f, status: "uploading", progress: Math.round(progress), eta: etaString }
-                  : f,
-              ),
+              prevFiles.map((f) => {
+                if (f.id !== currentUploadingFile.id) return f
+                if (isCurrentlyPaused || f.status === "paused") {
+                  return { ...f, progress: Math.round(progress), eta: etaString }
+                }
+                return { ...f, status: "uploading", progress: Math.round(progress), eta: etaString }
+              }),
             )
           },
           undefined,

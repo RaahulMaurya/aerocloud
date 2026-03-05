@@ -55,6 +55,7 @@ export interface SharedLink {
   fileId: string
   fileName: string
   fileUrl: string
+  storagePath?: string
   fileSize: number
   sharedBy: string
   createdAt: Date
@@ -535,6 +536,7 @@ export async function createSharedLink(
   fileUrl: string,
   fileSize: number,
   userFileToURLPlan?: string,
+  storagePath?: string,
 ): Promise<SharedLink> {
   const { FILE_TO_URL_PLANS } = await import("@/lib/razorpay")
 
@@ -554,6 +556,7 @@ export async function createSharedLink(
     fileId,
     fileName,
     fileUrl,
+    storagePath: storagePath || undefined,
     fileSize,
     sharedBy: userId,
     createdAt: now,
@@ -628,6 +631,7 @@ export async function getSharedLink(linkId: string): Promise<SharedLink | null> 
     fileId: data.fileId,
     fileName: data.fileName,
     fileUrl: data.fileUrl,
+    storagePath: data.storagePath,
     fileSize: data.fileSize,
     sharedBy: data.sharedBy,
     createdAt: data.createdAt.toDate(),
