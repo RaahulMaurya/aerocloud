@@ -178,7 +178,7 @@ export function SharedLinksPanel() {
               {selectMode && selectedIds.size > 0 && (
                 <button
                   onClick={handleDeleteSelected}
-                  className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-lg transition"
+                  className="flex items-center gap-2 px-4 py-2 bg-destructive hover:bg-destructive/90 text-white font-medium rounded-lg transition"
                 >
                   <Trash2 size={16} />
                   Delete {selectedIds.size} selected
